@@ -15,10 +15,8 @@ import sublime
 import sublime_plugin
 
 try:
-    from .color_theme import update_color_scheme
     from .lint import lint, lint_external, load_flake8_config
 except (ValueError, SystemError):
-    from color_theme import update_color_scheme
     from lint import lint, lint_external, load_flake8_config
 
 
@@ -65,14 +63,14 @@ class Flake8LintSettings(object):
         """
         Initialize settings.
         """
-        editor_settings = sublime.load_settings('Preferences.sublime-settings')
-        editor_settings.clear_on_change('flake8lint-color-scheme')
-        editor_settings.add_on_change('flake8lint-color-scheme',
-                                      lambda: update_color_scheme(settings))
+        # editor_settings = sublime.load_settings('Preferences.sublime-settings')
+        # editor_settings.clear_on_change('flake8lint-color-scheme')
+        # editor_settings.add_on_change('flake8lint-color-scheme',
+        #                               lambda: update_color_scheme(settings))
 
-        self.settings = sublime.load_settings('Flake8Lint.sublime-settings')
-        self.settings.clear_on_change('reload')
-        self.settings.add_on_change('reload', self.setup)
+        # self.settings = sublime.load_settings('Flake8Lint.sublime-settings')
+        # self.settings.clear_on_change('reload')
+        # self.settings.add_on_change('reload', self.setup)
 
         self.setup()
 
@@ -904,13 +902,13 @@ class LintReport(object):
         log("show flake8 lint errors")
 
         # this is fallback to default colors if our color scheme was not loaded
-        prefs = sublime.load_settings('Preferences.sublime-settings')
-        color_scheme = prefs.get('color_scheme')
-        if color_scheme and '(Flake8Lint)' in color_scheme:
-            scope_name = 'flake8lint.mark.{0}'
-        else:
-            log("use default colors because our color scheme was not loaded")
-            scope_name = 'invalid.deprecated'
+        # prefs = sublime.load_settings('Preferences.sublime-settings')
+        # color_scheme = prefs.get('color_scheme')
+        # if color_scheme and '(Flake8Lint)' in color_scheme:
+        #     scope_name = 'flake8lint.mark.{0}'
+        # else:
+        #     log("use default colors because our color scheme was not loaded")
+        #     scope_name = 'invalid.deprecated'
 
         # highlight error regions if defined
         if self.is_highlight:
@@ -1379,7 +1377,7 @@ def plugin_loaded():
 
     log("plugin was loaded")
 
-    update_color_scheme(settings)
+    # update_color_scheme(settings)
     Flake8Lint.on_file_load()
 
 
